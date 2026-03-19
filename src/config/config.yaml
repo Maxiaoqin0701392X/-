@@ -1,0 +1,80 @@
+# =============================================================================
+# config.yaml — Fiber-optic winding machine upper computer configuration
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Serial communication
+# ---------------------------------------------------------------------------
+serial:
+  port: "/dev/ttyUSB0"      # Serial port (Windows: "COM3", Linux: "/dev/ttyUSB0")
+  baudrate: 115200
+  timeout: 0.1              # Read timeout in seconds
+  auto_reconnect: true
+  reconnect_delay: 3.0      # Seconds between reconnect attempts
+
+# ---------------------------------------------------------------------------
+# Winding process parameters
+# ---------------------------------------------------------------------------
+process:
+  target_tension: 1.5       # Target fiber tension (N)
+  spindle_target_speed: 500.0   # Main spindle speed (rpm)
+  winding_target_speed: 10.0    # Traversal stage speed (mm/s)
+  total_layers: 10          # Number of winding layers
+  turns_per_layer: 200      # Turns per layer
+  overlap_width: 0.05       # Axial overlap width (mm)
+  overlap_position: 0.0     # Overlap reference position (mm)
+  fiber_diameter: 0.125     # Fiber outer diameter (mm)
+  initial_tension: 1.0      # Initial tension for first layer (N)
+
+# ---------------------------------------------------------------------------
+# Validator bounds
+# ---------------------------------------------------------------------------
+validator:
+  tension_min: 0.1          # Minimum allowable tension (N)
+  tension_max: 5.0          # Maximum allowable tension (N)
+  spindle_max: 3000.0       # Maximum spindle speed (rpm)
+  winding_speed_max: 200.0  # Maximum winding stage speed (mm/s)
+
+# ---------------------------------------------------------------------------
+# PID controllers
+# ---------------------------------------------------------------------------
+pid:
+  tension:
+    kp: 1.0
+    ki: 0.1
+    kd: 0.05
+  spindle:
+    kp: 2.0
+    ki: 0.5
+    kd: 0.1
+  winding:
+    kp: 1.5
+    ki: 0.2
+    kd: 0.05
+
+# ---------------------------------------------------------------------------
+# Data storage
+# ---------------------------------------------------------------------------
+storage:
+  db_path: "fiber_winding.db"
+  max_sensor_records: 100000    # Maximum rows in sensor_records before archiving
+
+# ---------------------------------------------------------------------------
+# UI / display
+# ---------------------------------------------------------------------------
+ui:
+  window_title: "光纤绕线上位机"
+  window_width: 1400
+  window_height: 900
+  refresh_rate_hz: 20           # UI refresh rate
+  tension_plot_history: 500     # Number of tension samples displayed
+  dark_theme: true
+
+# ---------------------------------------------------------------------------
+# Logging
+# ---------------------------------------------------------------------------
+logging:
+  level: "INFO"             # DEBUG / INFO / WARNING / ERROR
+  file: "fiber_winding.log"
+  max_bytes: 10485760       # 10 MB
+  backup_count: 3
